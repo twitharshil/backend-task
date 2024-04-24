@@ -1,6 +1,5 @@
 const contractService = require('../services/contract.services')
 
-
 async function getContractsByID (req, res) {
   const { id } = req.params
 
