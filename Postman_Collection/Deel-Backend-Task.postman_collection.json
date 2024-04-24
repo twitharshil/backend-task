@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "c6a24f40-29f9-4f8c-8898-c169f0a70be4",
+		"name": "Deel-Backend-Task",
+		"description": "\\- GET /contracts/:id: Retrieve a particular contract based on its ID only if the user profile ID matches either as a client or the contractor. -\n\n\\- GET /contracts: List non-terminated contracts for the authenticated user profile.\n\n\\- GET /jobs/unpaid: Retrieve all unpaid jobs for active contracts of the authenticated user.\n\n\\- POST /jobs/:job_id/pay: Pay for a job, transferring funds from a client to a contractor.\n\n\\- POST /balances/deposit/:userId: Deposit funds into a client's balance. Made sure that deposit amount can be in decimal too. Assumption taken is that this will be done only for active contracts.\n\n\\- GET endpoint at /admin/best-clients?start=&end=&limit=: the date format should be in ISO format, such as 2019-01-25. While the limit parameter has a default value of 2, both the start and end dates are mandatory.\n\n  \n\\- GET endpoint at /admin/best-profession?start=&end=: Find the highest-earning profession in a given date range. The date format should be in ISO format. If no profession stands out as the best, the response 'No profession found'. Otherwise, it will return an object containing the relevant information.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11421289"
+	},
+	"item": [
+		{
+			"name": "GET - Contract",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/contracts/1",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"contracts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Contracts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "3",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/contracts",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"contracts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Unpaid Jobs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "2",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/jobs/unpaid",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"jobs",
+						"unpaid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Best Profession",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "7",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/admin/best-profession?start=2019-01-01&end=2024-04-25",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"admin",
+						"best-profession"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2019-01-01"
+						},
+						{
+							"key": "end",
+							"value": "2024-04-25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Best Client",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "7",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/admin/best-clients?start=2019-01-01&end=2025-01-02",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"admin",
+						"best-clients"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2019-01-01"
+						},
+						{
+							"key": "end",
+							"value": "2025-01-02"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST -  Pay for a Job",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}:{{port}}/jobs/2/pay",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"jobs",
+						"2",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST -  Deposit to Client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "profile_id",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"depositAmount\": 5.2 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/balances/deposit/1",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"balances",
+						"deposit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
