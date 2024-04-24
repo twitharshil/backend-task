@@ -33,6 +33,52 @@ async function getBestProfession (start, end) {
   return queryResult.dataValues.Profession
 }
 
+async function getBestClients (start, end, limit) {
+  const queryResult = await Profile.findAll({
+    attributes: [
+      'id',
+      'firstName',
+      'lastName',
+      [sequelize.fn('SUM', sequelize.col('price')), 'paid']
+    ],
+    include: [
+      {
+        model: Contract,
+        as: 'Client',
+        attributes: [],
+        required: true,
+        include: [
+          {
+            model: Job,
+            required: true,
+            attributes: [],
+            where: {
+              paid: true,
+              paymentDate: {
+                [Op.between]: [new Date(start), new Date(end)]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    where: {
+      type: 'client'
+    },
+    group: ['firstName', 'lastName'],
+    order: [[sequelize.col('paid'), 'DESC']],
+    limit: limit || 2,
+    subQuery: false
+  })
+
+  if (!queryResult) {
+    throw new Error('No client found')
+  }
+
+  return queryResult
+}
+
 module.exports = {
-  getBestProfession
+  getBestProfession,
+  getBestClients
 }
