@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const { getProfile } = require('../middleware/getProfile')
-const { getAllUnpaidJobsDetail } = require('../controllers/jobsController')
+const { getAllUnpaidJobsDetail, payForJob } = require('../controllers/jobsController')
 
 router.get('/unpaid', getProfile, getAllUnpaidJobsDetail)
+router.post('/:jobID/pay', getProfile, payForJob)
 
 module.exports = router

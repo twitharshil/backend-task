@@ -1,4 +1,4 @@
-const { Sequelize, Op }  = require('sequelize')
+const { Sequelize, Op } = require('sequelize')
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
