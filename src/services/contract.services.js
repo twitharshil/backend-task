@@ -25,6 +25,31 @@ async function getContractDetailsByID (contractId, profileId) {
   return queryResult
 }
 
+/**
+     * Find all the contracts belong to a userID (Client or contractor) which are active
+     * @param profileId
+     * returns a result object
+**/
+
+async function getAllContracts (userID) {
+  const queryResult = await Contract.findAll({
+    where: {
+      status: ['in_progress', 'new'],
+      [Op.or]: [
+        { ClientId: userID },
+        { ContractorId: userID }
+      ]
+    }
+  })
+
+  if (!queryResult) {
+    throw new Error('No contracts found')
+  }
+
+  return queryResult
+}
+
 module.exports = {
-  getContractDetailsByID
+  getContractDetailsByID,
+  getAllContracts
 }

@@ -18,6 +18,19 @@ async function getContractsByID (req, res) {
   }
 }
 
+async function getAllContracts (req, res) {
+  try {
+    const contracts = await contractService.getAllContracts(req.profile.id)
+    return res.status(200).json(contracts).end()
+  } catch (err) {
+    if (err.message === 'No contracts found') {
+      return res.status(404).json({ message: 'Not Found' }).end()
+    }
+    return res.status(500).json({ message: 'Internal server error' }).end()
+  }
+}
+
 module.exports = {
-  getContractsByID
+  getContractsByID,
+  getAllContracts
 }
