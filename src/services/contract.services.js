@@ -2,12 +2,13 @@ const { Contract } = require('../model')
 const { Op } = require('sequelize')
 
 /**
-     * Find a contract by contract id and profile id
-     * @param contractId
-     * @param profileId
-     * returns a result object
-**/
-async function getContractDetailsByID (contractId, profileId) {
+ * Retrieve details of a contract by its ID.
+ * @param {number} contractId - The ID of the contract.
+ * @param {number} profileId - The ID of the user profile.
+ * @returns {object} - The details of the contract.
+ * @throws {Error} - If no contract is found.
+ */
+async function getContractDetailsById (contractId, profileId) {
   const queryResult = await Contract.findOne({
     where: {
       id: contractId,
@@ -22,27 +23,28 @@ async function getContractDetailsByID (contractId, profileId) {
     throw new Error('No contract found')
   }
 
+  console.log(typeof queryResult)
   return queryResult
 }
 
 /**
-     * Find all the contracts belong to a userID (Client or contractor) which are active
-     * @param profileId
-     * returns a result object
-**/
-
-async function getAllContracts (userID) {
+ * Find all contracts belonging to a user (client or contractor) that are active.
+ * @param {number} userId - The ID of the user profile.
+ * @returns {Array} - An array of contract objects.
+ * @throws {Error} - If no contracts are found.
+ */
+async function getAllContracts (userId) {
   const queryResult = await Contract.findAll({
     where: {
       status: ['in_progress', 'new'],
       [Op.or]: [
-        { ClientId: userID },
-        { ContractorId: userID }
+        { ClientId: userId },
+        { ContractorId: userId }
       ]
     }
   })
 
-  if (!queryResult) {
+  if (!queryResult || queryResult.length === 0) {
     throw new Error('No contracts found')
   }
 
@@ -50,6 +52,6 @@ async function getAllContracts (userID) {
 }
 
 module.exports = {
-  getContractDetailsByID,
+  getContractDetailsById,
   getAllContracts
 }

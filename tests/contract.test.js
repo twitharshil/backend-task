@@ -1,4 +1,4 @@
-const { getAllContracts, getContractDetailsByID } = require('../src/services/contract.services.js')
+const { getAllContracts, getContractDetailsById } = require('../src/services/contract.services.js')
 
 jest.mock('../src/model.js', () => {
   const mockContracts = [
@@ -32,7 +32,7 @@ jest.mock('../src/model.js', () => {
 
 describe('Contract Endpoints Tests', () => {
   it('should find a contract with given contract Id and user Id', async () => {
-    const contract = await getContractDetailsByID(1, 3)
+    const contract = await getContractDetailsById(1, 3)
     expect(contract).toBeDefined()
     expect(contract.id).toBe(1)
     expect(contract.ClientId).toBe(3)

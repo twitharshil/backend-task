@@ -5,7 +5,7 @@ async function getAllUnpaidJobsDetail (req, res) {
     const unPaidJobDetails = await jobService.getUnpaidJobDetails(req.profile.id)
     return res.status(200).json(unPaidJobDetails).end()
   } catch (err) {
-    if (err.message === 'Failed to find unpaid jobs') {
+    if (err.message === 'No unpaid jobs found') {
       return res.status(404).json({ message: 'No unpaid jobs found' }).end()
     }
     console.log(err)
@@ -14,14 +14,14 @@ async function getAllUnpaidJobsDetail (req, res) {
 }
 
 async function payForJob (req, res) {
-  const { jobID } = req.params
+  const { jobId } = req.params
 
-  if (!jobID) {
+  if (!jobId) {
     return res.status(400).json({ message: 'Job id is missing' }).end()
   }
 
   try {
-    const paymentResult = await jobService.payForJob(jobID, req.profile.id)
+    const paymentResult = await jobService.payForJob(jobId, req.profile.id)
 
     if (!paymentResult.success) {
       return res.status(400).json({ message: paymentResult.message }).end()
@@ -29,7 +29,7 @@ async function payForJob (req, res) {
 
     return res.status(200).json({ message: paymentResult.message }).end()
   } catch (err) {
-    if (err.message === `Failed to find unpaid job with profile_id: ${req.profile.id} and jobId: ${jobID}`) {
+    if (err.message === `Failed to find unpaid job with profile_id: ${req.profile.id} and jobId: ${jobId}`) {
       return res.status(404).json({ message: err.message }).end()
     } else if (err.message === "The client doesn't have enough money to pay for this job") {
       return res.status(402).json({ message: err.message }).end()

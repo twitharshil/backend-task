@@ -24,7 +24,7 @@ This backend exercise involves building a Node.js/Express.js app that will serve
   
 - GET /jobs/unpaid: Retrieve all unpaid jobs for active contracts of the authenticated user.
   
-- POST /jobs/:job_id/pay: Pay for a job, transferring funds from a client to a contractor.
+- POST /jobs/:jobId/pay: Pay for a job, transferring funds from a client to a contractor.
   
 - POST /balances/deposit/:userId: Deposit funds into a client's balance. Made sure that deposit amount can be in decimal too.
   
@@ -110,7 +110,7 @@ Below is a list of the required API's for the application.
 
 1. **_GET_** `/jobs/unpaid` - Get all unpaid jobs for a user (**_either_** a client or contractor), for **_active contracts only_**.
 
-1. **_POST_** `/jobs/:job_id/pay` - Pay for a job, a client can only pay if his balance >= the amount to pay. The amount should be moved from the client's balance to the contractor balance.
+1. **_POST_** `/jobs/:jobId/pay` - Pay for a job, a client can only pay if his balance >= the amount to pay. The amount should be moved from the client's balance to the contractor balance.
 
 1. **_POST_** `/balances/deposit/:userId` - Deposits money into the the the balance of a client, a client can't deposit more than 25% his total of jobs to pay. (at the deposit moment)
 

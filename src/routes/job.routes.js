@@ -5,6 +5,6 @@ const { getProfile } = require('../middleware/getProfile')
 const { getAllUnpaidJobsDetail, payForJob } = require('../controllers/jobsController')
 
 router.get('/unpaid', getProfile, getAllUnpaidJobsDetail)
-router.post('/:jobID/pay', getProfile, payForJob)
+router.post('/:jobId/pay', getProfile, payForJob)
 
 module.exports = router

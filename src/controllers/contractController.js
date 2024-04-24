@@ -1,6 +1,6 @@
 const contractService = require('../services/contract.services')
 
-async function getContractsByID (req, res) {
+async function getContractsById (req, res) {
   const { id } = req.params
 
   if (!id) {
@@ -8,7 +8,7 @@ async function getContractsByID (req, res) {
   }
 
   try {
-    const contract = await contractService.getContractDetailsByID(id, req.profile.id)
+    const contract = await contractService.getContractDetailsById(id, req.profile.id)
     return res.status(200).json(contract).end()
   } catch (err) {
     if (err.message === 'No contract found') {
@@ -24,13 +24,13 @@ async function getAllContracts (req, res) {
     return res.status(200).json(contracts).end()
   } catch (err) {
     if (err.message === 'No contracts found') {
-      return res.status(404).json({ message: 'Not Found' }).end()
+      return res.status(404).json({ message: 'No contracts found' }).end()
     }
     return res.status(500).json({ message: 'Internal server error' }).end()
   }
 }
 
 module.exports = {
-  getContractsByID,
+  getContractsById,
   getAllContracts
 }

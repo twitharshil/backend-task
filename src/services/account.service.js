@@ -1,9 +1,9 @@
 const { Profile, Job, Contract, sequelize } = require('../model')
 
 /**
-     * Deposit amount in client account
-     * @param userId
-     * @param depositAmount
+   * Deposit amount in client account
+   * @param userId - ID of the user
+   * @param depositAmount - Amount to deposit
 **/
 async function depositBalance (userId, depositAmount) {
   await sequelize.transaction(async (t) => {

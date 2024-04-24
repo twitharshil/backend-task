@@ -1,6 +1,11 @@
 const { Profile, Job, Contract, sequelize, Op } = require('../model')
 
-// Returns the profession that earned the most money (sum of jobs paid) for any contactor that worked in the query time range.
+/**
+ * Find the best profession based on earnings within a specified date range.
+ * @param {Date} start - Start date of the query.
+ * @param {Date} end - End date of the query.
+ * @returns {string} - The best profession.
+ */
 async function getBestProfession (start, end) {
   const queryResult = await Profile.findOne({
     attributes: ['Profession'],
@@ -33,6 +38,13 @@ async function getBestProfession (start, end) {
   return queryResult.dataValues.Profession
 }
 
+/**
+ * Find the best-paying clients within a specified date range.
+ * @param {Date} start - Start date of the query.
+ * @param {Date} end - End date of the query.
+ * @param {number} limit - Limit of the number of clients to retrieve.
+ * @returns {Array} - An array of best-paying clients.
+ */
 async function getBestClients (start, end, limit) {
   const queryResult = await Profile.findAll({
     attributes: [
@@ -71,7 +83,7 @@ async function getBestClients (start, end, limit) {
     subQuery: false
   })
 
-  if (!queryResult) {
+  if (!queryResult || queryResult.length === 0) {
     throw new Error('No client found')
   }
 
