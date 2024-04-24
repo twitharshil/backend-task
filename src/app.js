@@ -4,6 +4,7 @@ const { sequelize } = require('./model')
 
 const contractsRoutes = require('./routes/contracts.routes')
 const jobsRoutes = require('./routes/job.routes')
+const accountRoutes = require('./routes/account.routes')
 
 const app = express()
 app.use(bodyParser.json())
@@ -13,5 +14,6 @@ app.set('models', sequelize.models)
 
 app.use('/contracts', contractsRoutes)
 app.use('/jobs', jobsRoutes)
+app.use('/balances', accountRoutes)
 
 module.exports = app
