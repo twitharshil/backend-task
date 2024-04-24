@@ -25,7 +25,7 @@ async function getUnpaidJobDetails (profileId) {
   })
 
   if (!queryResult || queryResult.length === 0) {
-    throw new Error('Failed to find unpaid jobs');
+    throw new Error('Failed to find unpaid jobs')
   }
 
   return queryResult
