@@ -4,25 +4,77 @@
 
 This backend exercise involves building a Node.js/Express.js app that will serve a REST API. We imagine you should spend around 3 hours at implement this feature.
 
-## Data Models
+## Key Features Implemented
 
-> **All models are defined in src/model.js**
+- Endpoints for managing contracts, jobs, and user balances and admin controls within the API.
+- All payment-related operations ensure transactional integrity. For instance, a task is marked as paid only upon successful payment by the client.
+- Concurrency control is handled to manage simultaneous database operations, ensuring data integrity and consistency. For example, payment for a task is processed only if it hasn't already been paid.
+
+## What is done
+
+- For the API endpoints, I've added a Postman collection along with its environment variables file. It is present inside the Postman_Collection folder
+  
+- ESLint has been integrated to ensure syntax correctness, identify issues, and enforce consistent code style throughout the project. Routes, controllers, and services are organized into separate directories for modularity and maintainability.
+
+- Jest has been included for testing purposes, along with a sample unit test provided within the tests directory. While more complex test scenarios were not implemented to make sure I complete task on time, we can execute the tests by running `npm run test`.
+  
+- GET /contracts/:id: Retrieve a particular contract based on its ID only if the user profile ID matches either as a client or the contractor.
+  
+- GET /contracts: List non-terminated contracts for the authenticated user profile.
+  
+- GET /jobs/unpaid: Retrieve all unpaid jobs for active contracts of the authenticated user.
+  
+- POST /jobs/:job_id/pay: Pay for a job, transferring funds from a client to a contractor.
+  
+- POST /balances/deposit/:userId: Deposit funds into a client's balance. Made sure that deposit amount can be in decimal too.
+  
+- For the GET endpoint at /admin/best-clients?start=<date>&end=<date>&limit=<integer> The date format should be in ISO format, such as 2019-01-25. While the limit parameter has a default value of 2, both the start and end dates are mandatory.
+
+- When querying the GET endpoint at /admin/best-profession?start=<date>&end=<date> Give the highest-earning profession in a given date range. The date format should be in ISO format. If no profession stands out as the best, the response of 'No profession found' will be produced. Otherwise, it will return an object containing the relevant information.
+
+## Possible Improvements
+
+Here are some points that are important, and I would like to implement to make the code task better, but I could not implement them due to time constraint:
+
+- Add API documentation
+- Add more unit tests for all the endpoints.
+- Setting up a CI/CD pipeline for automated testing and deployment.
+
+## Technical Stack
+
+- Runtime: Node.js
+- Framework: Express.js
+- Database: SQLite
+- ORM: Sequelize
+
+## Tests Implemented
+
+Tests can be run by running the following command in the root folder of the project:
+
+```
+npm run test
+```
+
+1. GET /contracts/:id: Fetch a specific contract by its ID.
+2. GET /contracts: List non-terminated contracts for the authenticated user.
+
+## Data Models Used
 
 ### Profile
 
 A profile can be either a `client` or a `contractor`.
-clients create contracts with contractors. contractor does jobs for clients and get paid.
+Clients create contracts with contractors. Contractor does jobs for clients and get paid.
 Each profile has a balance property.
 
 ### Contract
 
 A contract between and client and a contractor.
-Contracts have 3 statuses, `new`, `in_progress`, `terminated`. contracts are considered active only when in status `in_progress`
+Contracts have 3 statuses, `new`, `in_progress`, `terminated`. Contracts are considered active only when in status `in_progress`
 Contracts group jobs within them.
 
 ### Job
 
-contractor get paid for jobs by clients under a certain contract.
+Contractor get paid for jobs by clients under a certain contract.
 
 ## Getting Set Up
 
@@ -30,12 +82,13 @@ The exercise requires [Node.js](https://nodejs.org/en/) to be installed. We reco
 
 1. Start by creating a local repository for this folder.
 
-1. In the repo root directory, run `npm install` to gather all dependencies.
+2. In the repo root directory, run `npm install` to gather all dependencies.
 
-1. Next, `npm run seed` will seed the local SQLite database. **Warning: This will drop the database if it exists**. The database lives in a local file `database.sqlite3`.
+3. Next, `npm run seed` will seed the local SQLite database. **Warning: This will drop the database if it exists**. The database lives in a local file `database.sqlite3`.
 
-1. Then run `npm start` which should start both the server and the React client.
+4. Then run `npm start` which should start both the server and the React client.
 
+5. Then run `npm run test` which should run the unit test.
 ❗️ **Make sure you commit all changes to the master branch!**
 
 ## Technical Notes
