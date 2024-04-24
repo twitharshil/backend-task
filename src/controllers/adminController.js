@@ -32,10 +32,10 @@ async function getBestClient (req, res) {
     const response = bestClients.map(client => ({
       id: client.id,
       fullName: `${client.firstName} ${client.lastName}`,
-      paid: client.paid
+      paid: client.dataValues.paid
     }))
 
-    return res.status(200).json({ message: response }).end()
+    return res.status(200).json(response ).end()
   } catch (err) {
     if (err.message === 'No client found') {
       return res.status(400).json({ message: 'No client found' }).end()
